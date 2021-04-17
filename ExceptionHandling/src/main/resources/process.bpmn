@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1psuihv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+  <bpmn:collaboration id="SendMailCollaboration">
+    <bpmn:participant id="SendMailPool" name="E-Mail Versand Prozess" processRef="e-mail-process" />
+  </bpmn:collaboration>
+  <bpmn:process id="e-mail-process" name="E-Mail Versand Prozess" isExecutable="true" camunda:historyTimeToLive="14">
+    <bpmn:startEvent id="SendMailStart" name="E-Mail soll verschickt werden">
+      <bpmn:outgoing>Flow_1f9fi9d</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="WriteMailTask" name="E-Mail schreiben" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="recipient" label="E-Mail" type="string" />
+          <camunda:formField id="content" label="Content" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1f9fi9d</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ti6t0h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="SendMailTask" name="E-Mail senden" camunda:type="external" camunda:topic="send-mail">
+      <bpmn:incoming>Flow_0r5lx8b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fetpmj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="SendMailErrorGatewayJoin">
+      <bpmn:incoming>Flow_0ti6t0h</bpmn:incoming>
+      <bpmn:incoming>Flow_0j7a74j</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r5lx8b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:boundaryEvent id="SendMailBusinessErrorEvent" name="E-Mail nicht gefunden" attachedToRef="SendMailTask">
+      <bpmn:outgoing>Flow_1vj422u</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_178xxqn" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1f9fi9d" sourceRef="SendMailStart" targetRef="WriteMailTask" />
+    <bpmn:sequenceFlow id="Flow_0ti6t0h" sourceRef="WriteMailTask" targetRef="SendMailErrorGatewayJoin" />
+    <bpmn:sequenceFlow id="Flow_0fetpmj" sourceRef="SendMailTask" targetRef="SendMailEnd" />
+    <bpmn:sequenceFlow id="Flow_1vj422u" sourceRef="SendMailBusinessErrorEvent" targetRef="CheckMailTask" />
+    <bpmn:sequenceFlow id="Flow_0r5lx8b" sourceRef="SendMailErrorGatewayJoin" targetRef="SendMailTask" />
+    <bpmn:sequenceFlow id="Flow_0j7a74j" sourceRef="CheckMailTask" targetRef="SendMailErrorGatewayJoin" />
+    <bpmn:endEvent id="SendMailEnd" name="E-Mail verschickt">
+      <bpmn:incoming>Flow_0fetpmj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="CheckMailTask" name="E-Mail-Adresse prüfen" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="recipient" label="E-Mail" type="string" />
+          <camunda:formField id="content" label="Content" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vj422u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j7a74j</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SendMailCollaboration">
+      <bpmndi:BPMNShape id="Participant_04ak666_di" bpmnElement="SendMailPool" isHorizontal="true">
+        <dc:Bounds x="160" y="90" width="690" height="330" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0j7a74j_di" bpmnElement="Flow_0j7a74j">
+        <di:waypoint x="621" y="340" />
+        <di:waypoint x="520" y="340" />
+        <di:waypoint x="520" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r5lx8b_di" bpmnElement="Flow_0r5lx8b">
+        <di:waypoint x="545" y="177" />
+        <di:waypoint x="591" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vj422u_di" bpmnElement="Flow_1vj422u">
+        <di:waypoint x="671" y="235" />
+        <di:waypoint x="671" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fetpmj_di" bpmnElement="Flow_0fetpmj">
+        <di:waypoint x="691" y="177" />
+        <di:waypoint x="752" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ti6t0h_di" bpmnElement="Flow_0ti6t0h">
+        <di:waypoint x="427" y="177" />
+        <di:waypoint x="495" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f9fi9d_di" bpmnElement="Flow_1f9fi9d">
+        <di:waypoint x="275" y="177" />
+        <di:waypoint x="327" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="SendMailStart">
+        <dc:Bounds x="239" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="213" y="202" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pfafur_di" bpmnElement="WriteMailTask">
+        <dc:Bounds x="327" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qxya8z_di" bpmnElement="SendMailTask">
+        <dc:Bounds x="591" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1k31aa4_di" bpmnElement="SendMailErrorGatewayJoin" isMarkerVisible="true">
+        <dc:Bounds x="495" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c5bi82_di" bpmnElement="SendMailEnd">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="728" y="202" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hfm2in_di" bpmnElement="CheckMailTask">
+        <dc:Bounds x="621" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_190e875_di" bpmnElement="SendMailBusinessErrorEvent">
+        <dc:Bounds x="653" y="199" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="611" y="236" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.viadee.bpm.demo</groupId>
+    <artifactId>external-task-exception-handling-example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <!-- settings -->
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <!-- versions -->
+        <version.camunda>7.15.0</version.camunda>
+        <version.spring-boot>2.4.4</version.spring-boot>
+        <version.retry-aspect>1.2.1</version.retry-aspect>
+        <version.jaxb-runtime>3.0.0</version.jaxb-runtime>
+
+        <plugin.compiler-maven>3.8.1</plugin.compiler-maven>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${version.camunda}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring-boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+            <version>${version.camunda}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+            <version>${version.camunda}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-external-task-client</artifactId>
+            <version>${version.camunda}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.viadee.bpm.camunda</groupId>
+            <artifactId>external-task-retry-aspect-spring-boot-starter</artifactId>
+            <version>${version.retry-aspect}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.spin</groupId>
+            <artifactId>camunda-spin-dataformat-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-plugin-spin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${version.jaxb-runtime}</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring-boot}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.compiler-maven}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
