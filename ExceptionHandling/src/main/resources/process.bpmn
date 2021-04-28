@@ -17,7 +17,12 @@
       <bpmn:incoming>Flow_1f9fi9d</bpmn:incoming>
       <bpmn:outgoing>Flow_0ti6t0h</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="SendMailTask" name="E-Mail senden" camunda:type="external" camunda:topic="send-mail">
+    <bpmn:serviceTask id="SendMailTask" name="E-Mail senden" camunda:asyncBefore="true" camunda:type="external" camunda:topic="send-mail">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property />
+        </camunda:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0r5lx8b</bpmn:incoming>
       <bpmn:outgoing>Flow_0fetpmj</bpmn:outgoing>
     </bpmn:serviceTask>
