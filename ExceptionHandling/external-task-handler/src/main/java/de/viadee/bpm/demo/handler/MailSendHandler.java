@@ -34,6 +34,7 @@ public class MailSendHandler implements ExternalTaskHandler {
         } catch (final RecipientNotFoundException ex) {
             log.error("Business-Error: Recipient could not be found: '{}'", ex.getRecipient());
             externalTaskService.handleBpmnError(externalTask, "recipient-not-found");
+            return;
         }
 
         // External-Task beenden
