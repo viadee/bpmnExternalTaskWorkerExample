@@ -1,4 +1,4 @@
-package de.viadee.bpm.demo.ExternalTaskWorker.service;
+package de.viadee.bpm.demo.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

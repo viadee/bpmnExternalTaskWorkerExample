@@ -1,4 +1,4 @@
-package de.viadee.bpm.demo.ExternalTaskWorker.service;
+package de.viadee.bpm.demo.service;
 
 public class RecipientNotFoundException extends RuntimeException {
 

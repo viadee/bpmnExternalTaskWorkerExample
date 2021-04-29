@@ -1,17 +1,14 @@
-package de.viadee.bpm.demo.ExternalTaskWorker.handler;
+package de.viadee.bpm.demo.handler;
 
-import de.viadee.bpm.demo.ExternalTaskWorker.service.MailService;
-import de.viadee.bpm.demo.ExternalTaskWorker.service.RecipientNotFoundException;
+import de.viadee.bpm.demo.service.MailService;
+import de.viadee.bpm.demo.service.RecipientNotFoundException;
 import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
-import org.camunda.bpm.engine.variable.Variables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.management.ServiceNotFoundException;
 
 @Component
 @ExternalTaskSubscription("send-mail")

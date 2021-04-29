@@ -11,9 +11,3 @@ camunda.bpm:
     firstName: Demo
   filter:
     create: All tasks
-  client:
-    base-url: http://localhost:8080/engine-rest
-    async-response-timeout: 5000
-    subscriptions:
-      send-mail:
-        include-extension-properties: true
