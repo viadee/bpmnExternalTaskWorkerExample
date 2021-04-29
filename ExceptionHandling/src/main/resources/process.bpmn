@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1psuihv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1psuihv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
   <bpmn:collaboration id="SendMailCollaboration">
     <bpmn:participant id="SendMailPool" name="E-Mail Versand Prozess" processRef="e-mail-process" />
   </bpmn:collaboration>
@@ -20,7 +20,7 @@
     <bpmn:serviceTask id="SendMailTask" name="E-Mail senden" camunda:asyncBefore="true" camunda:type="external" camunda:topic="send-mail">
       <bpmn:extensionElements>
         <camunda:properties>
-          <camunda:property />
+          <camunda:property name="RETRY_CONFIG" value="R5/PT10M" />
         </camunda:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0r5lx8b</bpmn:incoming>
