@@ -23,21 +23,20 @@ public class MailSendHandler implements ExternalTaskHandler {
 
     public void execute(final ExternalTask externalTask, final ExternalTaskService externalTaskService) {
 
-        // E-Mail-Adresse und Inhalt aus Prozesskontext laden
-        String recipient = externalTask.getVariable("recipient");
-        String content = externalTask.getVariable("content");
-
         try {
+            // E-Mail-Adresse und Inhalt aus Prozesskontext laden
+            String recipient = externalTask.getVariable("recipient");
+            String content = externalTask.getVariable("content");
+
             // E-Mail senden
             this.mailService.send(recipient, content);
+
+            // External-Task beenden
+            externalTaskService.complete(externalTask);
 
         } catch (final RecipientNotFoundException ex) {
             log.error("Business-Error: Recipient could not be found: '{}'", ex.getRecipient());
             externalTaskService.handleBpmnError(externalTask, "recipient-not-found");
-            return;
         }
-
-        // External-Task beenden
-        externalTaskService.complete(externalTask);
     }
 }
