@@ -2,7 +2,9 @@ server.port: 0
 camunda.bpm:
   client:
     base-url: http://localhost:8080/engine-rest
-    async-response-timeout: 5000
+    async-response-timeout: 10000
+    lock-duration: 10000
+    worker-id: bb8
     subscriptions:
       send-mail:
         include-extension-properties: true
